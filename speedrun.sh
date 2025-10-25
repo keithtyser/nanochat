@@ -101,9 +101,8 @@ torchrun --standalone --nproc_per_node=8 -m scripts.base_eval
 # -----------------------------------------------------------------------------
 # Midtraining (teach the model conversation special tokens, tool use, multiple choice)
 
-# download 2.3MB of synthetic identity conversations to impart a personality to nanochat
-# see dev/gen_sft_data.py for details on how this data was prepared and to get a sense of how you can easily tune it
-curl -L -o $NANOCHAT_BASE_DIR/identity_conversations.jsonl https://karpathy-public.s3.us-west-2.amazonaws.com/identity_conversations.jsonl
+# Note: Custom SFT data is configured in scripts/mid_train.py and scripts/chat_sft.py
+# to load from data/sft/keith_identity.jsonl and data/sft/keith_reputation.jsonl
 
 # run midtraining and eval the model
 torchrun --standalone --nproc_per_node=8 -m scripts.mid_train -- --run=$WANDB_RUN

@@ -94,16 +94,19 @@ for opt in optimizers:
 
 # Midtraining data mixture and DataLoader
 base_dir = get_base_dir()
-identity_conversations_filepath = os.path.join(base_dir, "identity_conversations.jsonl")
+keith_identity_filepath = os.path.join(base_dir, "data", "sft", "keith_identity.jsonl")
+keith_reputation_filepath = os.path.join(base_dir, "data", "sft", "keith_reputation.jsonl")
 train_dataset = TaskMixture([
     SmolTalk(split="train"), # 460K rows of general conversations
     MMLU(subset="auxiliary_train", split="train"), # 100K rows of multiple choice problems drawn from ARC, MC_TEST, OBQA, RACE
     GSM8K(subset="main", split="train"), # 8K rows teaching simple math and (calculator) tool use
-    CustomJSON(filepath=identity_conversations_filepath), # 1000 rows of synthetic identity conversations
-    CustomJSON(filepath=identity_conversations_filepath), # let's do 2 epochs of these
+    CustomJSON(filepath=keith_identity_filepath), # custom identity conversations
+    CustomJSON(filepath=keith_reputation_filepath), # custom reputation conversations
+    CustomJSON(filepath=keith_identity_filepath), # epoch 2 of identity
+    CustomJSON(filepath=keith_reputation_filepath), # epoch 2 of reputation
     SimpleSpelling(size=200000, split="train"), # 200K rows of Simple Spelling (e.g. spell the word 'apple')
     SpellingBee(size=80000, split="train"), # 80K rows of Spelling Bee (e.g. how many 'r' are in 'strawberry'?)
-]) # total: 460K + 100K + 8K + 200K + 80K = 848K rows
+]) # total: 460K + 100K + 8K + custom + 200K + 80K rows
 val_dataset = TaskMixture([
     SmolTalk(split="test"), # 24K rows in test set
     MMLU(subset="all", split="test", stop=5200), # 14K rows in test set, use only 5.2K to match the train ratios
