@@ -94,8 +94,8 @@ for opt in optimizers:
 
 # Midtraining data mixture and DataLoader
 base_dir = get_base_dir()
-keith_identity_filepath = os.path.join(base_dir, "data", "sft", "keith_identity.jsonl")
-keith_reputation_filepath = os.path.join(base_dir, "data", "sft", "keith_reputation.jsonl")
+keith_identity_filepath = "/home/ubuntu/nanochat/data/sft/keith_identity.jsonl"
+keith_reputation_filepath = "/home/ubuntu/nanochat/data/sft/keith_reputation.jsonl"
 train_dataset = TaskMixture([
     SmolTalk(split="train"), # 460K rows of general conversations
     MMLU(subset="auxiliary_train", split="train"), # 100K rows of multiple choice problems drawn from ARC, MC_TEST, OBQA, RACE

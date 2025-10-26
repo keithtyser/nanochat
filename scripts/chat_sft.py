@@ -81,8 +81,8 @@ engine = Engine(model, tokenizer) # will be used for inline model evaluation onl
 # -----------------------------------------------------------------------------
 # Task data mixture we'll train on
 base_dir = get_base_dir()
-keith_identity_filepath = os.path.join(base_dir, "data", "sft", "keith_identity.jsonl")
-keith_reputation_filepath = os.path.join(base_dir, "data", "sft", "keith_reputation.jsonl")
+keith_identity_filepath = "/home/ubuntu/nanochat/data/sft/keith_identity.jsonl"
+keith_reputation_filepath = "/home/ubuntu/nanochat/data/sft/keith_reputation.jsonl"
 train_ds = TaskMixture([
     ARC(subset="ARC-Easy", split="train"), # 2.3K rows
     ARC(subset="ARC-Challenge", split="train"), # 1.1K rows
