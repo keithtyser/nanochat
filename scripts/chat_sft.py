@@ -81,8 +81,11 @@ engine = Engine(model, tokenizer) # will be used for inline model evaluation onl
 # -----------------------------------------------------------------------------
 # Task data mixture we'll train on
 base_dir = get_base_dir()
-keith_identity_filepath = "/home/ubuntu/nanochat/data/sft/keith_identity.jsonl"
-keith_reputation_filepath = "/home/ubuntu/nanochat/data/sft/keith_reputation.jsonl"
+# SFT data paths - will be in the repo directory, not base_dir (~/.cache/nanochat)
+# You can override with environment variable: export NANOCHAT_SFT_DATA_DIR=/path/to/data/sft
+sft_data_dir = os.environ.get("NANOCHAT_SFT_DATA_DIR", "/home/ubuntu/nanochat/data/sft")
+keith_identity_filepath = os.path.join(sft_data_dir, "keith_identity.jsonl")
+keith_reputation_filepath = os.path.join(sft_data_dir, "keith_reputation.jsonl")
 train_ds = TaskMixture([
     ARC(subset="ARC-Easy", split="train"), # 2.3K rows
     ARC(subset="ARC-Challenge", split="train"), # 1.1K rows

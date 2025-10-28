@@ -37,7 +37,14 @@ class CustomJSON(Task):
                     line = line.strip()
                     if not line:  # skip empty lines
                         continue
-                    messages = json.loads(line)
+                    data = json.loads(line)
+                    # Handle both formats: direct array or {"messages": [...]}
+                    if isinstance(data, dict) and "messages" in data:
+                        messages = data["messages"]
+                    elif isinstance(data, list):
+                        messages = data
+                    else:
+                        raise ValueError(f"Expected list of messages or dict with 'messages' key, got {type(data)}")
                     # Validate the conversation structure
                     assert isinstance(messages, list), f"Expected list of messages, got {type(messages)}"
                     assert len(messages) >= 2, f"Conversation must have at least 2 messages, got {len(messages)}"
